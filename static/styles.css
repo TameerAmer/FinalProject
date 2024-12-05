@@ -1,0 +1,176 @@
+/* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #6987c5; /* Light neutral background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #333; /* Darker text for better contrast */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #2e3440; /* Darker background */
+    color: #e5e9f0; /* Light text for dark mode */
+}
+
+.container {
+    background-color: #ffffff; /* White background for the container */
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+    width: 320px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Dark Mode for Container */
+body.dark-mode .container {
+    background-color: #3b4252; /* Dark container */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Slightly darker shadow */
+}
+
+/* Form Elements */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Better spacing between form elements */
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #e0e0e0; /* Subtle border */
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+    border-color: #3b82f6; /* Primary color focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Highlight focus */
+    outline: none;
+}
+
+/* Dark Mode for Input Fields */
+body.dark-mode input {
+    background-color: #434c5e; /* Dark input background */
+    color: #e5e9f0; /* Light text for input fields */
+    border: 1px solid #4c566a; /* Dark border */
+}
+
+button {
+    background-color: #3b82f6; /* Modern blue primary */
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2563eb; /* Slightly darker shade on hover */
+}
+
+/* Dark Mode for Button */
+body.dark-mode button {
+    background-color: #81a1c1; /* Lighter blue for dark mode */
+}
+
+.flash {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.flash.error {
+    background-color: #fef2f2; /* Subtle error background */
+    color: #b91c1c; /* Deep red for errors */
+}
+
+.flash.success {
+    background-color: #f0fdf4; /* Subtle success background */
+    color: #15803d; /* Deep green for success */
+}
+
+/* Dark Mode for Flash Messages */
+body.dark-mode .flash.error {
+    background-color: #3b4252; /* Dark error background */
+    color: #bf616a; /* Light red */
+}
+
+body.dark-mode .flash.success {
+    background-color: #3b4252; /* Dark success background */
+    color: #a3be8c; /* Light green */
+}
+
+a {
+    text-align: center;
+    margin-top: 10px;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2563eb; /* Darker hover effect for links */
+}
+
+/* Dark Mode for Links */
+body.dark-mode a {
+    color: #81a1c1; /* Light blue for dark mode */
+}
+
+.welcome-banner {
+    position: absolute;
+    top: 00px; /* Adjust to your preference */
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333; /* Modern dark text color */
+    background-color: #f3f4f6; /* Optional: slightly different background */
+    padding: 10px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+/* Dark Mode for Welcome Banner */
+body.dark-mode .welcome-banner {
+    color: #e5e9f0; /* Light text */
+    background-color: #4c566a; /* Dark background */
+}
+
+/* Positioning the Dark/Light Mode Toggle Button */
+#theme-toggle {
+    position: absolute;
+    top: 20px;  /* Position at the top of the page or container */
+    right: 20px; /* Right-align the button */
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 24px; /* Icon size */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Dark Mode for Button Icon */
+body.dark-mode #theme-toggle {
+    color: #e5e9f0; /* Light icon color in dark mode */
+}
+
+/* Change icon to Sun when in dark mode */
+body.dark-mode #theme-icon {
+    content: '\f185'; /* FontAwesome sun icon for light mode */
+}
+
+body.dark-mode button:hover{
+    background-color: #555
+}
+
+
+
