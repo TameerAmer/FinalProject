@@ -36,22 +36,37 @@
             </header>
 
             <section class="stats">
-                <div class="card">
-                    <h3>Total Tests</h3>
-                    <p>50</p>
-                </div>
-                <div class="card">
-                    <h3>Completed Tests</h3>
-                    <p>45</p>
-                </div>
-                <div class="card">
-                    <h3>Pending Reports</h3>
-                    <p>5</p>
-                </div>
+                <a href="{{ url_for('VisualAcuityTest') }}" class="card-link">
+                    <div class="card">
+                        <h3>Visual Acuity Test</h3>
+                        <p>50</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('ColorVisionTest') }}" class="card-link">
+                    <div class="card">
+                        <h3>Color Vision Test</h3>
+                        <p>45</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('ContrastVisionTest') }}" class="card-link">
+                    <div class="card">
+                        <h3>Contrast Vision Test</h3>
+                        <p>5</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('BlurCheckTest') }}" class="card-link">
+                    <div class="card">
+                        <h3>Blur Check Test</h3>
+                        <p>50</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('WatchTheDotTest') }}" class="card-link">
+                    <div class="card">
+                        <h3>Watch The Dot Test</h3>
+                        <p>50</p>
+                    </div>
+                </a>
             </section>
-            <div class="StartTestButton">
-                <a href="{{ url_for('allTests') }}" class="AllTestsButton">Start Test</a>
-            </div>
         </main>
     </div>
 

@@ -67,5 +67,47 @@ def logout():
     session.clear()  # Clear session data
     return redirect(url_for('login'))  # Redirect to login page
 
+@app.route('/allTests')
+def allTests():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    user_name = session['user_name']  # Get user name from session
+    return render_template('allTests.html', user_name=user_name) 
+
+@app.route('/VisualAcuityTest')
+def VisualAcuityTest():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    user_name = session['user_name']  # Get user name from session
+    return render_template('VisualAcuityTest.html', user_name=user_name)
+
+@app.route('/ColorVisionTest')
+def ColorVisionTest():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    user_name = session['user_name']  # Get user name from session
+    return render_template('ColorVisionTest.html', user_name=user_name)
+
+@app.route('/ContrastVisionTest')
+def ContrastVisionTest():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    user_name = session['user_name']  # Get user name from session
+    return render_template('ContrastVisionTest.html', user_name=user_name)
+
+@app.route('/BlurCheckTest')
+def BlurCheckTest():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    user_name = session['user_name']  # Get user name from session
+    return render_template('BlurCheckTest.html', user_name=user_name)
+
+@app.route('/VWatchTheDotTest')
+def WatchTheDotTest():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    user_name = session['user_name']  # Get user name from session
+    return render_template('WatchTheDotTest.html', user_name=user_name)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -83,6 +83,10 @@ body {
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
 }
+.card-link {
+    text-decoration: none; /* Remove the underline from the <a> tag */
+    display: block; /* Ensure <a> behaves like a block element, covering the card */
+}
 
 .card:hover {
     transform: translateY(-5px);
@@ -111,12 +115,43 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-.StartTestButton{
+/* Center the button container */
+.StartTestButton {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh; 
+    height: 50vh;
+    margin: 0 auto; /* Ensure the container stays centered */
+    background-color: #f9f9f9; /* Optional: Background for the container */
 }
+body.dark-mode .StartTestButton {
+    background-color: #2e3440;
+}
+.AllTestsButton{
+    background-color: #3b82f6; /* Modern blue primary */
+    color: #ffffff;
+    border: none;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Ensures no underline appears */
+    display: inline-block; /* Keeps it styled like a button */
+    text-align: center;
+}
+.AllTestsButton:hover {
+    background-color: #2563eb; /* Slightly darker shade on hover */
+}
+body.dark-mode .AllTestsButton  {
+    
+    background-color: #81a1c1; 
+}
+body.dark-mode .AllTestsButton:hover{
+    
+    background-color: #555;
+}
+
 
 button:hover {
     background-color: #2563eb; /* Slightly darker shade on hover */
