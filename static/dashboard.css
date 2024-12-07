@@ -122,7 +122,7 @@ button {
     align-items: center;
     height: 50vh;
     margin: 0 auto; /* Ensure the container stays centered */
-    background-color: #f9f9f9; /* Optional: Background for the container */
+    background-color: #f9f9f9; 
 }
 body.dark-mode .StartTestButton {
     background-color: #2e3440;
