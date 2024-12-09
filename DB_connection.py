@@ -174,4 +174,29 @@ class ConnectDatabase:
         except Exception as e:
             print(f"Error saving to DB: {e}")
             return False  # Return False if an error occurred
+        
+
+    def get_total_tests_count(self, user_id):
+        connection = None
+        cursor = None
+        try:
+            connection = self.get_connection()
+            if not connection:
+                return 0
+
+            cursor = connection.cursor()
+            
+            # Count all visual acuity test results for this user
+            query = "SELECT COUNT(*) FROM visual_acuity WHERE user_id = %s"
+            cursor.execute(query, (user_id,))
+            return cursor.fetchone()[0]
+
+        except Error as e:
+            print(f"Error getting total tests count: {e}")
+            return 0
+        finally:
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
 

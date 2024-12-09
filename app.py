@@ -68,12 +68,19 @@ def register_process():
 @app.route('/dashboard')
 def dashboard():
     if 'user_name' not in session:
-        return redirect(url_for('login'))  # Redirect to login if session is not found
+        return redirect(url_for('login'))
     
-    user_name = session['user_name']  # Get user name from session
+    user_id = session['user_id']
+    user_name = session['user_name']
+    
+    # Get test counts for the user
+    total_tests = db.get_total_tests_count(user_id)
     
     # Prevent caching of the dashboard page
-    response = make_response(render_template('dashboard.html', user_name=user_name))
+    response = make_response(render_template('dashboard.html', 
+        user_name=user_name, 
+        total_tests=total_tests
+    ))
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
     return response
  
@@ -160,6 +167,21 @@ def save_results():
     else:
         return jsonify({'success': False, 'message': 'Failed to save results'}), 500
 
+@app.route('/TestsSection')
+def TestsSection():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    response = make_response(render_template('TestsSection.html'))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    return response
+
+@app.route('/reports')
+def reports():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    response = make_response(render_template('reports.html'))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

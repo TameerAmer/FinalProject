@@ -19,8 +19,8 @@
             <nav class="menu">
                 <ul>
                     <li><a href="{{ url_for('dashboard') }}" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-tasks"></i> Tests</a></li>
-                    <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-file-alt"></i> Reports</a></li>
+                    <li><a href="{{ url_for('TestsSection') }}"><i class="fas fa-tasks"></i> Tests</a></li>
+                    <li><a href="{{ url_for('reports') }}"><i class="fas fa-file-alt"></i> Reports</a></li>
                     <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-cog"></i> Settings</a></li>
                     <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
@@ -38,15 +38,7 @@
             <section class="stats">
                 <div class="card">
                     <h3>Total Tests</h3>
-                    <p>50</p>
-                </div>
-                <div class="card">
-                    <h3>Completed Tests</h3>
-                    <p>45</p>
-                </div>
-                <div class="card">
-                    <h3>Pending Reports</h3>
-                    <p>5</p>
+                    <p>{{ total_tests }}</p>
                 </div>
             </section>
             <div class="StartTestButton">
