@@ -141,7 +141,7 @@ class ConnectDatabase:
 
             cursor = connection.cursor()  # Create the cursor from the connection
 
-            query = "SELECT id FROM users WHERE Email = %s"
+            query = "SELECT user_id FROM users WHERE Email = %s"
             cursor.execute(query, (email,))
             result = cursor.fetchone()
 

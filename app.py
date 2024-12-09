@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify,make_response
 from DB_connection import ConnectDatabase
 
 app = Flask(__name__)
@@ -8,7 +8,14 @@ db = ConnectDatabase()
 
 @app.route('/')
 def login():
-    return render_template('login.html')
+    if 'user_name' in session:
+        session.clear()  # Clear any existing session
+    response = make_response(render_template('login.html'))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
 
 @app.route('/login', methods=['POST'])
 def login_process():
@@ -57,24 +64,40 @@ def register_process():
     
     return redirect(url_for('register'))
 
+
 @app.route('/dashboard')
 def dashboard():
     if 'user_name' not in session:
-        return redirect(url_for('login'))  
+        return redirect(url_for('login'))  # Redirect to login if session is not found
+    
     user_name = session['user_name']  # Get user name from session
-    return render_template('dashboard.html', user_name=user_name)  
+    
+    # Prevent caching of the dashboard page
+    response = make_response(render_template('dashboard.html', user_name=user_name))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    return response
+ 
 
 @app.route('/logout')
 def logout():
     session.clear()  # Clear session data
-    return redirect(url_for('login'))  # Redirect to login page
+    response = make_response(redirect(url_for('login')))
+    response.set_cookie('session', '', expires=0)  # Expire the session cookie
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
+
 
 @app.route('/allTests')
 def allTests():
     if 'user_name' not in session:
         return redirect(url_for('login'))  
     user_name = session['user_name']  # Get user name from session
-    return render_template('allTests.html', user_name=user_name) 
+    response = make_response(render_template('allTests.html', user_name=user_name))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    return response
 
 @app.route('/VisualAcuityTest')
 def VisualAcuityTest():

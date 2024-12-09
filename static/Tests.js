@@ -313,7 +313,7 @@ function endTest() {
 
     setTimeout(() => {
       window.location.href = "allTests";
-    }, 8000);
+    }, 2200);
     saveTestResult();
   });
 }
@@ -362,7 +362,6 @@ function saveTestResult() {
       leftEyeIncorrect:leftEyeIncorrect,
       feedBack:feedBack
     };
-    console.log(resultData);
     fetch('/save-results', {
       method: 'POST',
       headers: {
