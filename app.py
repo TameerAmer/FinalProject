@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from DB_connection import ConnectDatabase
 
 app = Flask(__name__)
@@ -18,8 +18,9 @@ def login_process():
     result = db.login(email, password)
     
     if result == "True details":
-        user_name = db.get_user_name(email) 
-        session['user_name'] = user_name  # Store the user's name in the session
+        user_id = db.get_user_id(email)  # Get the user ID from the database
+        session['user_id'] = user_id  # Store the user ID in the session
+        session['user_name'] = db.get_user_name(email)  # Optionally store the username
         return redirect(url_for('dashboard'))
     elif result == "Email does not exist":
         flash('Email does not exist', 'error')
@@ -27,6 +28,7 @@ def login_process():
         flash('Incorrect password', 'error')
     
     return redirect(url_for('login'))
+
 
 @app.route('/register')
 def register():
@@ -108,6 +110,33 @@ def WatchTheDotTest():
         return redirect(url_for('login'))  
     user_name = session['user_name']  # Get user name from session
     return render_template('WatchTheDotTest.html', user_name=user_name)
+
+@app.route('/save-results', methods=['POST'])
+def save_results():
+    # Get the JSON data from the frontend
+    data = request.get_json()
+    left_eye_level = data.get('leftEyeLevel')
+    right_eye_level = data.get('rightEyeLevel')
+    incorrect_answers = data.get('incorrectAnswers')
+    highest_level_passed = data.get('highestLevelPassed')
+    left_eye_incorrect = data.get('leftEyeIncorrect')
+    right_eye_incorrect = data.get('rightEyeIncorrect')
+    feedback=data.get('feedBack')
+
+    # Get the user ID from the session (ensure the user is logged in)
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'User not logged in'}), 401
+    
+    user_id = session['user_id']  # Get the current logged-in user's ID from session
+    
+    # Call the function to save the results to the database
+    success = db.save_test_result(user_id, right_eye_level,right_eye_incorrect,left_eye_level,left_eye_incorrect,feedback)
+    
+    if success:
+        return jsonify({'success': True}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Failed to save results'}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

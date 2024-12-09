@@ -25,6 +25,9 @@ let highestLevelPassed = 1;
 let currentEye = "Left";
 let leftEyeLevel = 0;
 let rightEyeLevel = 0;
+let rightEyeIncorrect=0;
+let leftEyeIncorrect=0;
+let feedBack=''
 
 // Function to determine vision feedback
 function determineVisionFeedback(leftEye, rightEye) {
@@ -52,10 +55,8 @@ function determineVisionFeedback(leftEye, rightEye) {
         "Great! Your vision seems excellent. Keep maintaining eye health.";
       feedback.color = "#5cb85c";
     }
-  
-    // Replace \n with <br> for line breaks in HTML content
+    feedBack=feedback.message;
     feedback.message += `<br>Left Eye Level: ${leftEye}/17<br>Right Eye Level: ${rightEye}/17`;
-  
     return feedback;
   }
   
@@ -108,7 +109,7 @@ function loadTest() {
   if (incorrectAnswers >= 3 || currentTestIndex >= tests.length) {
     if (currentEye === "Left") {
       leftEyeLevel = highestLevelPassed;
-
+      leftEyeIncorrect=incorrectAnswers;
       // Show the pop-up message for switching to right eye
       const coverEyeMessage = document.getElementById("cover-eye-message");
       const okButton = document.getElementById("ok-button");
@@ -134,6 +135,7 @@ function loadTest() {
 
       return;
     } else {
+      rightEyeIncorrect=incorrectAnswers;
       endTest();
       return;
     }
@@ -311,7 +313,8 @@ function endTest() {
 
     setTimeout(() => {
       window.location.href = "allTests";
-    }, 2200);
+    }, 8000);
+    saveTestResult();
   });
 }
 
@@ -349,3 +352,32 @@ document.addEventListener("DOMContentLoaded", function () {
     coverEyeOkButton.addEventListener("click", handleCoverEyeOK);
   }
 });
+
+function saveTestResult() {
+    const resultData = {
+      leftEyeLevel: leftEyeLevel,
+      rightEyeLevel: rightEyeLevel,
+      incorrectAnswers: incorrectAnswers,
+      rightEyeIncorrect:rightEyeIncorrect,
+      leftEyeIncorrect:leftEyeIncorrect,
+      feedBack:feedBack
+    };
+    console.log(resultData);
+    fetch('/save-results', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(resultData), // Sending the results as JSON
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log("Test results saved successfully.");
+        } else {
+          console.log("Error saving test results.");
+        }
+      })
+      .catch(error => console.error("Error:", error));
+  }
+  

@@ -130,4 +130,48 @@ class ConnectDatabase:
                 cursor.close()
             if connection:
                 connection.close()
+    
+    def get_user_id(self, email):
+        connection = None
+        cursor = None
+        try:
+            connection = self.get_connection()  # Get the connection
+            if not connection:
+                return None  # Return None if connection fails
+
+            cursor = connection.cursor()  # Create the cursor from the connection
+
+            query = "SELECT id FROM users WHERE Email = %s"
+            cursor.execute(query, (email,))
+            result = cursor.fetchone()
+
+            return result[0] if result else None
+
+        except Error as e:
+            print(f"Error fetching id: {e}")
+            return None
+        finally:
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
+    
+    # Save visual acuity test result
+    def save_test_result(self, user_id, right_eye_level, right_eye_incorrect, left_eye_level, left_eye_incorrect, feedback):
+        try:
+            con = self.get_connection()
+            cursor = con.cursor()
+
+            cursor.execute('''
+                INSERT INTO visual_acuity(user_id, right_eye_max_level, right_eye_incorrect, left_eye_max_level, left_eye_incorrect, feedback)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            ''', (user_id, right_eye_level, right_eye_incorrect, left_eye_level, left_eye_incorrect, feedback))
+
+            con.commit()
+            con.close()
+
+            return True  # Return True if the operation was successful
+        except Exception as e:
+            print(f"Error saving to DB: {e}")
+            return False  # Return False if an error occurred
 
