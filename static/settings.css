@@ -9,25 +9,14 @@ body {
 
 body.dark-mode {
     background-color: #2e3440;
-    /* Dark background */
     color: #e5e5e5;
-    /* Lighter text */
 }
 
 .settings-container {
-    max-width: 1000px;
-    margin: 20px auto;
+    margin-left: 260px; /* Matches the sidebar width */
     padding: 20px;
-    background-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
 }
 
-body.dark-mode .settings-container {
-    background-color: #3b4252;
-    /* Dark container background */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
 
 h1 {
     text-align: center;
@@ -225,3 +214,63 @@ body.dark-mode .danger-actions button:hover {
 body.dark-mode #theme-toggle {
     color: #e5e9f0; /* Light icon color in dark mode */
 }
+
+.sidebar {
+    width: 260px; /* Sidebar width */
+    background-color: #1f2937;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Fixes the sidebar on the left */
+    top: 0; /* Aligns it to the top */
+    left: 0; /* Aligns it to the left */
+    height: 100%; /* Full-height sidebar */
+    z-index: 1000; /* Ensures it stays above other content */
+}
+
+.sidebar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu ul li {
+    margin: 15px 0;
+}
+
+.sidebar .menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar .menu ul li a.active,
+.sidebar .menu ul li a:hover {
+    background-color: #2563eb;
+    border-radius: 8px;
+}
+
+body.dark-mode .sidebar {
+    background-color: #3b4252;
+}
+
+body.dark-mode .sidebar .menu ul li a {
+    color: #e5e5e5;
+}
+
+body.dark-mode .sidebar .menu ul li a.active,
+body.dark-mode .sidebar .menu ul li a:hover {
+    background-color: #4c566a;
+} 

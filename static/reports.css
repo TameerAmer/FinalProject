@@ -11,10 +11,6 @@ body.dark-mode {
     color: #e5e5e5;
 }
 
-.reports-container {
-    margin-left: 260px; /* Matches the sidebar width */
-    padding: 20px;
-}
 
 /* Header Section */
 .reports-header {
