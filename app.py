@@ -179,7 +179,7 @@ def TestsSection():
 def reports():
     if 'user_name' not in session:
         return redirect(url_for('login'))  
-    response = make_response(render_template('reports.html'))
+    response = make_response(render_template('Reports.html'))
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
     return response
 
