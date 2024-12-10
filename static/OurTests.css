@@ -83,6 +83,9 @@ body {
     color: #333;
     margin-bottom: 20px;
 }
+body.dark-mode .tests-catalog h2{
+    color: #ffffff;
+}
 
 .test-grid {
     display: grid;
