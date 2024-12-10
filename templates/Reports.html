@@ -20,7 +20,7 @@
             </ul>
         </nav>
     </div>
-    
+
     <div class="reports-container">
         <header class="reports-header">
             <h1>Test Reports</h1>
@@ -76,7 +76,8 @@
                         <td>{{ report.score }}%</td>
                         <td class="status-{{ report.status|lower }}">{{ report.status }}</td>
                         <td>
-                            <a href="{{ url_for('view_report', report_id=report.id) }}" class="btn-view">View Details</a>
+                            <a href="{{ url_for('view_report', report_id=report.id) }}" class="btn-view">View
+                                Details</a>
                         </td>
                     </tr>
                     {% endfor %}

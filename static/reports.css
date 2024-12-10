@@ -40,8 +40,206 @@ body.dark-mode .reports-header h1 {
     color: #81a1c1;
 }
 
+.filter-section {
+    display: flex;
+    gap: 15px;
+}
 
-/* Theme Toggle Button */
+.filter-section select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+body.dark-mode .filter-section select {
+    background-color: #4c566a;
+    border: 1px solid #81a1c1;
+    color: #e5e5e5;
+}
+
+.filter-section select:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+body.dark-mode .filter-section select:focus {
+    border-color: #81a1c1;
+}
+
+/* Reports Summary */
+.reports-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+body.dark-mode .summary-card {
+    background-color: #3b4252;
+    box-shadow: none;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .summary-card:hover {
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+.summary-card h3 {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+body.dark-mode .summary-card h3 {
+    color: #ccc;
+}
+
+.summary-card p {
+    font-size: 1.8rem;
+    color: #2563eb;
+    margin: 0;
+}
+
+body.dark-mode .summary-card p {
+    color: #81a1c1;
+}
+
+/* Detailed Reports Table */
+.detailed-reports {
+    margin-bottom: 30px;
+}
+
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .reports-table {
+    background-color: #3b4252;
+    box-shadow: none;
+}
+
+.reports-table thead {
+    background-color: #2563eb;
+    color: white;
+}
+
+body.dark-mode .reports-table thead {
+    background-color: #4c566a;
+}
+
+.reports-table th, .reports-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+body.dark-mode .reports-table th, 
+body.dark-mode .reports-table td {
+    color: #e5e5e5;
+}
+
+.reports-table tbody tr:nth-child(even) {
+    background-color: #f9fafc;
+}
+
+body.dark-mode .reports-table tbody tr:nth-child(even) {
+    background-color: #434c5e;
+}
+
+.reports-table tbody tr:hover {
+    background-color: #eef3fc;
+}
+
+body.dark-mode .reports-table tbody tr:hover {
+    background-color: #4c566a;
+}
+
+.status-passed {
+    color: green;
+    font-weight: bold;
+}
+
+.status-failed {
+    color: red;
+    font-weight: bold;
+}
+
+body.dark-mode .status-passed {
+    color: #a3be8c;
+}
+
+body.dark-mode .status-failed {
+    color: #bf616a;
+}
+
+.btn-view {
+    text-decoration: none;
+    background-color: #2563eb;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+body.dark-mode .btn-view {
+    background-color: #81a1c1;
+    color: #2e3440;
+}
+
+.btn-view:hover {
+    background-color: #1d4ed8;
+}
+
+body.dark-mode .btn-view:hover {
+    background-color: #5e81ac;
+}
+
+/* Report Charts */
+.report-charts {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .report-charts {
+    background-color: #3b4252;
+    box-shadow: none;
+}
+
+.performance-chart {
+    text-align: center;
+}
+
+/* Adjust content to make space for the sidebar */
+.reports-container {
+    margin-left: 260px; /* Matches the sidebar width */
+    padding: 20px;
+}
+
 #theme-toggle {
     position: center;
     top: 20px;
@@ -56,10 +254,13 @@ body.dark-mode .reports-header h1 {
     cursor: pointer;
     transition: color 0.3s ease;
 }
+
 body.dark-mode #theme-toggle {
-    color: #e5e9f0; /* Light icon color in dark mode */
+    color: #e5e9f0;
+    /* Light icon color in dark mode */
 }
 
+/* Sidebar */
 .sidebar {
     width: 260px; /* Sidebar width */
     background-color: #1f2937;
@@ -101,7 +302,8 @@ body.dark-mode #theme-toggle {
     transition: background 0.3s, color 0.3s;
 }
 
-.sidebar .menu ul li a.active, .sidebar .menu ul li a:hover {
+.sidebar .menu ul li a.active,
+.sidebar .menu ul li a:hover {
     background-color: #2563eb;
     border-radius: 8px;
 }
@@ -114,8 +316,8 @@ body.dark-mode .sidebar .menu ul li a {
     color: #e5e5e5;
 }
 
+body.dark-mode .sidebar .menu ul li a.active,
 body.dark-mode .sidebar .menu ul li a:hover {
-    background-color: #2563eb;
+    background-color: #4c566a;
 }
-
 
