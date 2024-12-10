@@ -183,5 +183,14 @@ def reports():
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
     return response
 
+@app.route('/settings')
+def settings():
+    if 'user_name' not in session:
+        return redirect(url_for('login'))  
+    response = make_response(render_template('Settings.html'))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    return response
+
+
 if __name__ == '__main__':
     app.run(debug=True)
