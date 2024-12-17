@@ -157,7 +157,7 @@ class ConnectDatabase:
                 connection.close()
     
     # Save visual acuity test result
-    def save_test_result(self, user_id, right_eye_level, right_eye_incorrect, left_eye_level, left_eye_incorrect, feedback):
+    def VisualAcuity_save_test_result(self, user_id, right_eye_level, right_eye_incorrect, left_eye_level, left_eye_incorrect, feedback):
         try:
             con = self.get_connection()
             cursor = con.cursor()
@@ -166,6 +166,24 @@ class ConnectDatabase:
                 INSERT INTO visual_acuity(user_id, right_eye_max_level, right_eye_incorrect, left_eye_max_level, left_eye_incorrect, feedback)
                 VALUES (%s, %s, %s, %s, %s, %s)
             ''', (user_id, right_eye_level, right_eye_incorrect, left_eye_level, left_eye_incorrect, feedback))
+
+            con.commit()
+            con.close()
+
+            return True  # Return True if the operation was successful
+        except Exception as e:
+            print(f"Error saving to DB: {e}")
+            return False  # Return False if an error occurred
+        
+    def ColorVision_save_test_result(self,user_id,correctAnswers,incorrectAnswers,feedBack):
+        try:
+            con = self.get_connection()
+            cursor = con.cursor()
+
+            cursor.execute('''
+                INSERT INTO color_vision(user_id,correct_answers,incorrect_answers,feedback)
+                VALUES (%s, %s, %s, %s)
+            ''', (user_id,correctAnswers,incorrectAnswers,feedBack))
 
             con.commit()
             con.close()

@@ -141,8 +141,8 @@ def WatchTheDotTest():
     user_name = session['user_name']  # Get user name from session
     return render_template('WatchTheDotTest.html', user_name=user_name)
 
-@app.route('/save-results', methods=['POST'])
-def save_results():
+@app.route('/Visual_Acuity_save_results', methods=['POST'])
+def Visual_Acuity_save_results():
     # Get the JSON data from the frontend
     data = request.get_json()
     left_eye_level = data.get('leftEyeLevel')
@@ -160,7 +160,30 @@ def save_results():
     user_id = session['user_id']  # Get the current logged-in user's ID from session
     
     # Call the function to save the results to the database
-    success = db.save_test_result(user_id, right_eye_level,right_eye_incorrect,left_eye_level,left_eye_incorrect,feedback)
+    success = db.VisualAcuity_save_test_result(user_id, right_eye_level,right_eye_incorrect,left_eye_level,left_eye_incorrect,feedback)
+    
+    if success:
+        return jsonify({'success': True}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Failed to save results'}), 500
+    
+
+@app.route('/Color_Vision_save_results', methods=['POST'])
+def Color_Vision_save_results():
+    # Get the JSON data from the frontend
+    data = request.get_json()
+    correctAnswers = data.get('score')
+    incorrectAnswers=data.get('incorrectanswers')
+    feedBack=data.get('feedBack')
+    
+    # Get the user ID from the session (ensure the user is logged in)
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'User not logged in'}), 401
+    
+    user_id = session['user_id']  # Get the current logged-in user's ID from session
+    
+    # Call the function to save the results to the database
+    success = db.ColorVision_save_test_result(user_id,correctAnswers,incorrectAnswers,feedBack)
     
     if success:
         return jsonify({'success': True}), 200

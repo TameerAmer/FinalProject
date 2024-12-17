@@ -1,67 +1,109 @@
 /* General Styles */
+html,
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #6987c5; /* Light neutral background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    height: 100%;
     margin: 0;
-    color: #333; /* Darker text for better contrast */
+    font-family: 'Inter', sans-serif;
     transition: background-color 0.3s, color 0.3s;
+}
+
+body {
+    background-color: #6987c5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Dark Mode */
 body.dark-mode {
-    background-color: #2e3440; /* Darker background */
-    color: #e5e9f0; /* Light text for dark mode */
+    background-color: #2e3440;
+    color: #e5e9f0;
+}
+
+.page-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-banner {
+    background-color: #f3f4f6;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    width:100%;
+}
+
+.dark-mode .welcome-banner {
+    background-color: #4c566a;
+    color: #e5e9f0;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensure full width */
+    padding: 40px 20px;
 }
 
 .container {
-    background-color: #ffffff; /* White background for the container */
-    padding: 25px;
+    background-color: #ffffff;
+    padding: 40px;
+    /* Internal padding for the container */
     border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
-    width: 320px;
-    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    /* Restrict maximum width */
+    margin: 20px 0;
+    /* Space above and below the container */
+    box-sizing: border-box;
+    /* Ensure padding is part of width calculation */
 }
 
-/* Dark Mode for Container */
-body.dark-mode .container {
-    background-color: #3b4252; /* Dark container */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Slightly darker shadow */
+
+
+.dark-mode .container {
+    background-color: #3b4252;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Form Elements */
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Better spacing between form elements */
+    gap: 15px;
 }
 
 input {
     padding: 12px;
-    border: 1px solid #e0e0e0; /* Subtle border */
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+.dark-mode input {
+    background-color: #434c5e;
+    color: #e5e9f0;
+    border: 1px solid #4c566a;
+}
+
 input:focus {
-    border-color: #3b82f6; /* Primary color focus */
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Highlight focus */
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
     outline: none;
 }
 
-/* Dark Mode for Input Fields */
-body.dark-mode input {
-    background-color: #434c5e; /* Dark input background */
-    color: #e5e9f0; /* Light text for input fields */
-    border: 1px solid #4c566a; /* Dark border */
-}
-
 button {
-    background-color: #3b82f6; /* Modern blue primary */
+    background-color: #3b82f6;
     color: #ffffff;
     border: none;
     padding: 12px;
@@ -71,13 +113,16 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #2563eb; /* Slightly darker shade on hover */
+.dark-mode button {
+    background-color: #81a1c1;
 }
 
-/* Dark Mode for Button */
-body.dark-mode button {
-    background-color: #81a1c1; /* Lighter blue for dark mode */
+button:hover {
+    background-color: #2563eb;
+}
+
+.dark-mode button:hover {
+    background-color: #555;
 }
 
 .flash {
@@ -88,24 +133,23 @@ body.dark-mode button {
 }
 
 .flash.error {
-    background-color: #fef2f2; /* Subtle error background */
-    color: #b91c1c; /* Deep red for errors */
+    background-color: #fef2f2;
+    color: #b91c1c;
 }
 
 .flash.success {
-    background-color: #f0fdf4; /* Subtle success background */
-    color: #15803d; /* Deep green for success */
+    background-color: #f0fdf4;
+    color: #15803d;
 }
 
-/* Dark Mode for Flash Messages */
-body.dark-mode .flash.error {
-    background-color: #3b4252; /* Dark error background */
-    color: #bf616a; /* Light red */
+.dark-mode .flash.error {
+    background-color: #3b4252;
+    color: #bf616a;
 }
 
-body.dark-mode .flash.success {
-    background-color: #3b4252; /* Dark success background */
-    color: #a3be8c; /* Light green */
+.dark-mode .flash.success {
+    background-color: #3b4252;
+    color: #a3be8c;
 }
 
 a {
@@ -117,60 +161,65 @@ a {
     transition: color 0.3s ease;
 }
 
+.dark-mode a {
+    color: #81a1c1;
+}
+
 a:hover {
-    color: #2563eb; /* Darker hover effect for links */
+    color: #2563eb;
 }
 
-/* Dark Mode for Links */
-body.dark-mode a {
-    color: #81a1c1; /* Light blue for dark mode */
-}
-
-.welcome-banner {
-    position: absolute;
-    top: 00px; /* Adjust to your preference */
+.footer {
+    background-color: #f3f4f6;
+    padding: 20px 0;
     width: 100%;
+}
+
+.dark-mode .footer {
+    background-color: #4c566a;
+    color: #e5e9f0;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 5px;
+}
+
+.footer-bottom {
     text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    color: #333; /* Modern dark text color */
-    background-color: #f3f4f6; /* Optional: slightly different background */
-    padding: 10px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px;
 }
 
-/* Dark Mode for Welcome Banner */
-body.dark-mode .welcome-banner {
-    color: #e5e9f0; /* Light text */
-    background-color: #4c566a; /* Dark background */
+.dark-mode .footer-bottom {
+    border-top-color: #666;
 }
 
-/* Positioning the Dark/Light Mode Toggle Button */
 #theme-toggle {
     position: absolute;
-    top: 20px;  /* Position at the top of the page or container */
-    right: 20px; /* Right-align the button */
+    top: 20px;
+    right: 20px;
     background-color: transparent;
     border: none;
     color: #333;
-    font-size: 24px; /* Icon size */
+    font-size: 24px;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
-/* Dark Mode for Button Icon */
-body.dark-mode #theme-toggle {
-    color: #e5e9f0; /* Light icon color in dark mode */
+.dark-mode #theme-toggle {
+    color: #e5e9f0;
 }
 
-/* Change icon to Sun when in dark mode */
-body.dark-mode #theme-icon {
-    content: '\f185'; /* FontAwesome sun icon for light mode */
+.dark-mode #theme-icon {
+    content: '\f185';
 }
-
-body.dark-mode button:hover{
-    background-color: #555
-}
-
-
-

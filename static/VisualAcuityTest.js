@@ -25,41 +25,70 @@ let highestLevelPassed = 1;
 let currentEye = "Left";
 let leftEyeLevel = 0;
 let rightEyeLevel = 0;
-let rightEyeIncorrect=0;
-let leftEyeIncorrect=0;
-let feedBack=''
+let rightEyeIncorrect = 0;
+let leftEyeIncorrect = 0;
+let feedBack = "";
+let testInProgress = false;
+
+// Create a navigation confirmation modal
+function createNavigationConfirmationModal() {
+  const modal = document.createElement("div");
+  modal.id = "navigation-confirmation-modal";
+  modal.style.position = "fixed";
+  modal.style.top = "0";
+  modal.style.left = "0";
+  modal.style.width = "100%";
+  modal.style.height = "100%";
+  modal.style.backgroundColor = "rgba(0,0,0,0.5)";
+  modal.style.display = "flex";
+  modal.style.justifyContent = "center";
+  modal.style.alignItems = "center";
+  modal.style.zIndex = "1000";
+
+  modal.innerHTML = `
+      <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center; max-width: 300px;">
+          <h2>Are you sure?</h2>
+          <p>If you leave now, your current test progress will be lost.</p>
+          <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+              <button id="confirm-navigation" style="padding: 10px 20px; background-color: #5cb85c; color: white; border: none; border-radius: 5px; cursor: pointer;">Yes, Leave</button>
+              <button id="cancel-navigation" style="padding: 10px 20px; background-color: #d9534f; color: white; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
+          </div>
+      </div>
+  `;
+
+  return modal;
+}
 
 // Function to determine vision feedback
 function determineVisionFeedback(leftEye, rightEye) {
-    const averageLevel = Math.floor((leftEye + rightEye) / 2);
-  
-    let feedback = {
-      message: "",
-      color: "",
-    };
-    
-    if (averageLevel < 5) {
-      feedback.message =
-        "Your vision seems too low! You should visit an eye doctor immediately.";
-      feedback.color = "#d9534f";
-    } else if (averageLevel <= 10) {
-      feedback.message =
-        "Your vision needs attention. We recommend scheduling a visit to an eye doctor.";
-      feedback.color = "#f0ad4e";
-    } else if (averageLevel <= 13) {
-      feedback.message =
-        "Your vision is okay, but consider an eye checkup for better clarity.";
-      feedback.color = "#f0ad4e";
-    } else {
-      feedback.message =
-        "Great! Your vision seems excellent. Keep maintaining eye health.";
-      feedback.color = "#5cb85c";
-    }
-    feedBack=feedback.message;
-    feedback.message += `<br>Left Eye Level: ${leftEye}/17<br>Right Eye Level: ${rightEye}/17`;
-    return feedback;
+  const averageLevel = Math.floor((leftEye + rightEye) / 2);
+
+  let feedback = {
+    message: "",
+    color: "",
+  };
+
+  if (averageLevel < 5) {
+    feedback.message =
+      "Your vision seems too low! You should visit an eye doctor immediately.";
+    feedback.color = "#d9534f";
+  } else if (averageLevel <= 10) {
+    feedback.message =
+      "Your vision needs attention. We recommend scheduling a visit to an eye doctor.";
+    feedback.color = "#f0ad4e";
+  } else if (averageLevel <= 13) {
+    feedback.message =
+      "Your vision is okay, but consider an eye checkup for better clarity.";
+    feedback.color = "#f0ad4e";
+  } else {
+    feedback.message =
+      "Great! Your vision seems excellent. Keep maintaining eye health.";
+    feedback.color = "#5cb85c";
   }
-  
+  feedBack = feedback.message;
+  feedback.message += `<br>Left Eye Level: ${leftEye}/17<br>Right Eye Level: ${rightEye}/17`;
+  return feedback;
+}
 
 // Function to handle closing the cover eye message
 function handleCoverEyeOK() {
@@ -74,6 +103,7 @@ function handleCoverEyeOK() {
       coverEyeMessage.style.display = "none";
 
       // Reset for right eye test
+      leftEyeIncorrect=incorrectAnswers;
       currentTestIndex = 0;
       incorrectAnswers = 0;
       highestLevelPassed = 1;
@@ -81,7 +111,7 @@ function handleCoverEyeOK() {
 
       // Update instructions for right eye
       document.getElementById("instructions").innerText =
-        "I)Please cover your right eye!\nII)Find the gap and mark it on the lower ring!";
+        "I)Please cover your right eye!\nII)Keep your head in a distance of 30-35 cm from the screen!\nIII)Find the gap and mark it on the lower ring!";
       document.getElementById("instructions").style.cssText = `
         text-align: center; 
         font-size: 20px;
@@ -109,7 +139,7 @@ function loadTest() {
   if (incorrectAnswers >= 3 || currentTestIndex >= tests.length) {
     if (currentEye === "Left") {
       leftEyeLevel = highestLevelPassed;
-      leftEyeIncorrect=incorrectAnswers;
+      leftEyeIncorrect = incorrectAnswers;
       // Show the pop-up message for switching to right eye
       const coverEyeMessage = document.getElementById("cover-eye-message");
       const okButton = document.getElementById("ok-button");
@@ -132,10 +162,9 @@ function loadTest() {
       } else {
         console.error("OK button not found!");
       }
-
       return;
     } else {
-      rightEyeIncorrect=incorrectAnswers;
+      rightEyeIncorrect = incorrectAnswers;
       endTest();
       return;
     }
@@ -244,8 +273,21 @@ function startTest() {
   // Update eye display
   const currentEyeDisplay = document.getElementById("current-eye");
   currentEyeDisplay.textContent = `Current Eye: Left Eye`;
+  // Set test in progress
+  testInProgress = true;
+
+  // Add navigation prevention
+  window.addEventListener("beforeunload", confirmNavigation);
 
   loadTest();
+}
+
+// Confirmation for page navigation
+function confirmNavigation(event) {
+  if (testInProgress) {
+      event.preventDefault(); // Standard way to show confirmation dialog
+      event.returnValue = ''; // Required for Chrome
+  }
 }
 
 // Function to end the test
@@ -259,6 +301,7 @@ function endTest() {
   // If we just finished the right eye test, record it
   if (currentEye === "Right") {
     rightEyeLevel = highestLevelPassed;
+    rightEyeIncorrect=incorrectAnswers;
   }
 
   // Provide comprehensive feedback
@@ -298,6 +341,7 @@ function endTest() {
 
   // Add a click event listener to the OK button
   okButton.addEventListener("click", () => {
+    window.removeEventListener("beforeunload", confirmNavigation);// Remove the navigation prevention event listener
     // Clear the content container
     contentContainer.innerHTML = "";
 
@@ -333,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Change the content of the h1 and p elements
       document.getElementById("title").innerText = "Visual Acuity Test";
       document.getElementById("instructions").innerText =
-        "I)Please cover your left eye!\nII)Find the gap and mark it on the lower ring!";
+        "I)Please cover your left eye!\nII)Keep your head in a distance of 30-35 cm from the screen!\nIII)Find the gap and mark it on the lower ring!";
 
       // Show the test screen and hide instructions
       const testControls = document.getElementById("test-controls");
@@ -343,6 +387,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Start the test
       startTest();
+      window.addEventListener('beforeunload', confirmNavigation);
     });
   }
 
@@ -354,29 +399,29 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function saveTestResult() {
-    const resultData = {
-      leftEyeLevel: leftEyeLevel,
-      rightEyeLevel: rightEyeLevel,
-      incorrectAnswers: incorrectAnswers,
-      rightEyeIncorrect:rightEyeIncorrect,
-      leftEyeIncorrect:leftEyeIncorrect,
-      feedBack:feedBack
-    };
-    fetch('/save-results', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(resultData), // Sending the results as JSON
+  const resultData = {
+    leftEyeLevel: leftEyeLevel,
+    rightEyeLevel: rightEyeLevel,
+    incorrectAnswers: incorrectAnswers,
+    rightEyeIncorrect: rightEyeIncorrect,
+    leftEyeIncorrect: leftEyeIncorrect,
+    feedBack: feedBack,
+  };
+  console.log("Saving Test Results:", resultData);
+  fetch("/Visual_Acuity_save_results", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultData), // Sending the results as JSON
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        console.log("Test results saved successfully.");
+      } else {
+        console.log("Error saving test results.");
+      }
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          console.log("Test results saved successfully.");
-        } else {
-          console.log("Error saving test results.");
-        }
-      })
-      .catch(error => console.error("Error:", error));
-  }
-  
+    .catch((error) => console.error("Error:", error));
+}
